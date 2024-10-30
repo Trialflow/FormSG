@@ -83,14 +83,13 @@ export const FormResponseOptions = forwardRef<
       >
         <Tile.Title>Multi-respondent form</Tile.Title>
         <Tile.Subtitle>
-          Collect responses from multiple people in the same submission
+          Collect responses from multiple people by adding a workflow to your
+          form and assigning fields to each person
         </Tile.Subtitle>
         <OptionDescription
           listItems={[
-            'Add a workflow to your form',
-            'Assign fields to different respondents ',
-            'Attachments: Up to 20 MB per form',
-            'Up to restricted and sensitive (Normal) data',
+            'Attachments: Up to 20MB per form',
+            'Up to Restricted and Sensitive (Normal) data',
           ]}
         />
       </Tile>
