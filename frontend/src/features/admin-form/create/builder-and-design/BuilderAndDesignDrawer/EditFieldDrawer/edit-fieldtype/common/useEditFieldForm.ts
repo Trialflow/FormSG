@@ -8,6 +8,7 @@ import {
   UseFormReturn,
   useWatch,
 } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 import { useDebounce } from 'react-use'
 import { cloneDeep } from 'lodash'
 
@@ -81,6 +82,7 @@ export const useEditFieldForm = <
   FormShape,
   FieldShape
 >): UseEditFieldFormReturn<FormShape> => {
+  const { t } = useTranslation()
   const { stateData, setToInactive, updateEditState, updateCreateState } =
     useFieldBuilderStore(
       useCallback(
@@ -191,8 +193,11 @@ export const useEditFieldForm = <
   )
 
   const buttonText = useMemo(
-    () => (isPendingField ? 'Create field' : 'Save field'),
-    [isPendingField],
+    () =>
+      isPendingField
+        ? t('features.adminForm.sidebar.fields.builder.createField')
+        : t('features.common.saveField'),
+    [isPendingField, t],
   )
 
   return {

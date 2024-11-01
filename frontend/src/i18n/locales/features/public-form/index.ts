@@ -14,8 +14,7 @@ export interface PublicForm {
     }
     myinfo: string
     submitFailure: string
-    verifiedFieldExpired_one: string
-    verifiedFieldExpired_other: string
+    verifiedFieldExpired: string
   }
   components: {
     PublicFormSubmitButton: {

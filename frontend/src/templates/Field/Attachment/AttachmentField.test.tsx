@@ -202,7 +202,7 @@ describe('attachment validation', () => {
     // Should show error message.
     await waitFor(() => {
       const error = screen.queryByText(
-        /The following file extension in your zip file is not valid: .rubbish/i,
+        /The following file extensions in your zip file are not valid: .rubbish/i,
       )
       expect(error).not.toBeNull()
     })

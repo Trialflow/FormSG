@@ -19,10 +19,8 @@ export const enSG: PublicForm = {
       'Your Myinfo details could not be retrieved. Refresh your browser and log in, or try again later.',
     submitFailure:
       'An error occurred whilst processing your submission. Please refresh and try again.',
-    verifiedFieldExpired_one:
-      'Your verified field {{count}} has expired. Please verify the {{count}} field again.',
-    verifiedFieldExpired_other:
-      'Your verified fields {{count}} have expired. Please verify those {{count}} fields again.',
+    verifiedFieldExpired:
+      'Your verified fields have expired. Please verify those fields again.',
   },
   components: {
     PublicFormSubmitButton: {
