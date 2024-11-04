@@ -1,4 +1,5 @@
 import { useCallback, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { BiGitMerge, BiQuestionMark } from 'react-icons/bi'
 import { Divider, Stack } from '@chakra-ui/react'
 
@@ -35,6 +36,7 @@ import { FEATURE_TOUR } from '../../featureTour/constants'
 import { DrawerTabIcon } from './DrawerTabIcon'
 
 export const CreatePageSidebar = (): JSX.Element | null => {
+  const { t } = useTranslation()
   const isMobile = useIsMobile()
 
   const { data } = useAdminForm()
@@ -109,7 +111,7 @@ export const CreatePageSidebar = (): JSX.Element | null => {
     >
       <Stack spacing="0.5rem">
         <DrawerTabIcon
-          label="Add fields"
+          label={t('features.adminForm.sidebar.fields.builder.addFields')}
           trackingLabel="create_builder.drawer_tab.add_fields"
           icon={<BxsWidget fontSize="1.5rem" />}
           onClick={handleDrawerBuilderClick}
@@ -117,7 +119,7 @@ export const CreatePageSidebar = (): JSX.Element | null => {
           id={FEATURE_TOUR[0].id}
         />
         <DrawerTabIcon
-          label="Edit header and instructions"
+          label={t('features.adminForm.sidebar.headerAndInstructions.title')}
           trackingLabel="create_builder.drawer_tab.edit_header"
           icon={<BxsDockTop fontSize="1.5rem" />}
           onClick={handleDrawerDesignClick}
@@ -125,7 +127,7 @@ export const CreatePageSidebar = (): JSX.Element | null => {
           id={FEATURE_TOUR[1].id}
         />
         <DrawerTabIcon
-          label="Add logic"
+          label={t('features.adminForm.sidebar.logic.addLogicBtn')}
           trackingLabel="create_builder.drawer_tab.add_logic"
           icon={<BiGitMerge fontSize="1.5rem" />}
           onClick={handleDrawerLogicClick}
@@ -133,7 +135,7 @@ export const CreatePageSidebar = (): JSX.Element | null => {
           id={FEATURE_TOUR[2].id}
         />
         <DrawerTabIcon
-          label="Edit Thank you page"
+          label={t('features.adminForm.sidebar.thankYou.thankYouPage.title')}
           trackingLabel="create_builder.drawer_tab.edit_thank_you_page"
           icon={<PhHandsClapping fontSize="1.5rem" />}
           onClick={handleDrawerEndpageClick}

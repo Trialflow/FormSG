@@ -1,7 +1,7 @@
 {
   "name": "FormSG",
   "description": "Form Manager for Government",
-  "version": "6.156.0",
+  "version": "6.157.0",
   "homepage": "https://form.gov.sg",
   "authors": [
     "FormSG <formsg@data.gov.sg>"
@@ -125,6 +125,7 @@
     "nocache": "^3.0.4",
     "node-cache": "^5.1.2",
     "nodemailer": "^6.9.13",
+    "openai": "^4.63.0",
     "openid-client": "^5.3.1",
     "opossum": "^8.1.4",
     "promise-retry": "^2.0.1",

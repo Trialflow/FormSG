@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Box,
   FormLabel as ChakraFormLabel,
@@ -202,6 +203,8 @@ FormLabel.OptionalIndicator = ({
   // Valid hook usage since composited component is still a component.
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const field = useFormControlContext()
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { t } = useTranslation()
 
   // If isRequired is explicitly provided, ignore form control context value.
   if (isRequired ?? field?.isRequired) return null
@@ -216,7 +219,7 @@ FormLabel.OptionalIndicator = ({
       lineHeight={0}
       {...props}
     >
-      (optional)
+      {`(${t('features.common.optional')})`}
     </Text>
   )
 }

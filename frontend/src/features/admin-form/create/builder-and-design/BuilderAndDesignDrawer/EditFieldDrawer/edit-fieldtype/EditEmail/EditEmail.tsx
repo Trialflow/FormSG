@@ -1,5 +1,6 @@
 import { useMemo, useRef } from 'react'
 import { RegisterOptions } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 import { Box, FormControl, useMergeRefs } from '@chakra-ui/react'
 import { extend, pick } from 'lodash'
 
@@ -66,6 +67,7 @@ const transformEmailEditFormToField = (
 }
 
 export const EditEmail = ({ field }: EditEmailProps): JSX.Element => {
+  const { t } = useTranslation()
   const {
     register,
     formState: { errors },
@@ -141,7 +143,9 @@ export const EditEmail = ({ field }: EditEmailProps): JSX.Element => {
 
   const pdfResponseToggleDescription = isPdfResponseEnabled
     ? undefined
-    : 'PDF responses are not available for payment forms.'
+    : t(
+        'features.adminForm.sidebar.fields.email.emailConfirmation.includePdfResponseWarning',
+      )
 
   // email confirmation is not supported on MRF
   const isToggleEmailConfirmationDisabled =
@@ -165,13 +169,22 @@ export const EditEmail = ({ field }: EditEmailProps): JSX.Element => {
         <FormErrorMessage>{errors?.description?.message}</FormErrorMessage>
       </FormControl>
       <FormControl isReadOnly={isLoading}>
-        <Toggle {...register('required')} label="Required" />
+        <Toggle
+          {...register('required')}
+          label={t(
+            'features.adminForm.sidebar.fields.commonFieldComponents.required',
+          )}
+        />
       </FormControl>
       <FormControl isReadOnly={isLoading}>
         <Toggle
           {...register('isVerifiable')}
-          label="OTP verification"
-          description="Respondents must verify by entering a code sent to them"
+          label={t(
+            'features.adminForm.sidebar.fields.email.otpVerification.title',
+          )}
+          description={t(
+            'features.adminForm.sidebar.fields.email.otpVerification.description',
+          )}
         />
       </FormControl>
       <Box>
@@ -179,7 +192,9 @@ export const EditEmail = ({ field }: EditEmailProps): JSX.Element => {
           <Toggle
             {...allowedEmailDomainsRegister}
             ref={mergedAllowedEmailDomainsRef}
-            label="Restrict email domains"
+            label={t(
+              'features.adminForm.sidebar.fields.email.restrictEmailDomains.title',
+            )}
           />
         </FormControl>
         {watchedHasAllowedEmailDomains && (
@@ -189,11 +204,17 @@ export const EditEmail = ({ field }: EditEmailProps): JSX.Element => {
             isInvalid={!!errors.allowedEmailDomains}
             mt="1.5rem"
           >
-            <FormLabel>Domains allowed</FormLabel>
+            <FormLabel>
+              {t(
+                'features.adminForm.sidebar.fields.email.restrictEmailDomains.inputLabel',
+              )}
+            </FormLabel>
             <Textarea
               autoFocus
               {...register('allowedEmailDomains', emailDomainsValidation)}
-              placeholder={'@data.gov.sg\n@agency.gov.sg'}
+              placeholder={t(
+                'features.adminForm.sidebar.fields.email.restrictEmailDomains.placeholder',
+              )}
             />
             <FormErrorMessage>
               {errors?.allowedEmailDomains?.message}
@@ -208,8 +229,12 @@ export const EditEmail = ({ field }: EditEmailProps): JSX.Element => {
         >
           <Toggle
             {...register('autoReplyOptions.hasAutoReply')}
-            description="Customise an email acknowledgement to respondents"
-            label="Email confirmation"
+            description={t(
+              'features.adminForm.sidebar.fields.email.emailConfirmation.description',
+            )}
+            label={t(
+              'features.adminForm.sidebar.fields.email.emailConfirmation.title',
+            )}
           />
         </FormControl>
         {watchedHasAutoReply && (
@@ -218,28 +243,44 @@ export const EditEmail = ({ field }: EditEmailProps): JSX.Element => {
               <FormLabel>Subject</FormLabel>
               <Input
                 autoFocus
-                placeholder="Default email subject"
+                placeholder={t(
+                  'features.adminForm.sidebar.fields.email.emailConfirmation.subject.placeholder',
+                )}
                 {...register('autoReplyOptions.autoReplySubject')}
               />
             </FormControl>
             <FormControl isRequired isReadOnly={isLoading} mt="1.5rem">
-              <FormLabel>Sender name</FormLabel>
+              <FormLabel>
+                {t(
+                  'features.adminForm.sidebar.fields.email.emailConfirmation.senderName.title',
+                )}
+              </FormLabel>
               <Input
-                placeholder="Default sender name is your agency name"
+                placeholder={t(
+                  'features.adminForm.sidebar.fields.email.emailConfirmation.senderName.placeholder',
+                )}
                 {...register('autoReplyOptions.autoReplySender')}
               />
             </FormControl>
             <FormControl isReadOnly={isLoading} isRequired mt="1.5rem">
-              <FormLabel>Content</FormLabel>
+              <FormLabel>
+                {t(
+                  'features.adminForm.sidebar.fields.email.emailConfirmation.content.title',
+                )}
+              </FormLabel>
               <Textarea
-                placeholder="Default email body"
+                placeholder={t(
+                  'features.adminForm.sidebar.fields.email.emailConfirmation.content.placeholder',
+                )}
                 {...register('autoReplyOptions.autoReplyMessage')}
               />
             </FormControl>
             <FormControl isReadOnly={isLoading} mt="1.5rem">
               <Toggle
                 {...register('autoReplyOptions.includeFormSummary')}
-                label="Include PDF response"
+                label={t(
+                  'features.adminForm.sidebar.fields.email.emailConfirmation.includePdfResponse',
+                )}
                 description={pdfResponseToggleDescription}
                 isDisabled={!isPdfResponseEnabled}
               />

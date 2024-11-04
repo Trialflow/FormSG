@@ -1,4 +1,5 @@
 import { useCallback, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { BiArrowBack, BiDotsHorizontalRounded, BiShow } from 'react-icons/bi'
 import { Link as ReactLink } from 'react-router-dom'
 import { Waypoint } from 'react-waypoint'
@@ -56,6 +57,7 @@ const textProps: TextProps = {
 export const PreviewFormBanner = ({
   isTemplate,
 }: PreviewFormBannerProps): JSX.Element => {
+  const { t } = useTranslation()
   const { formId, isPaymentEnabled } = usePublicFormContext()
   const { data: { secretEnv } = {} } = useEnv()
   const {
@@ -133,11 +135,11 @@ export const PreviewFormBanner = ({
             </>
           ) : (
             <Button
-              aria-label="Click to edit the form"
+              aria-label={t('features.common.editForm.ariaLabel')}
               as={ReactLink}
               to={`${ADMINFORM_ROUTE}/${formId}`}
             >
-              Edit form
+              {t('features.common.editForm.text')}
             </Button>
           )}
         </Flex>

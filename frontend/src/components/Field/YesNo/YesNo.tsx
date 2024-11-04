@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { BiCheck, BiX } from 'react-icons/bi'
 import {
   forwardRef,
@@ -52,6 +53,7 @@ export const YesNo = forwardRef<YesNoProps, 'input'>(
   ({ colorScheme, ...props }, ref) => {
     const formControlProps = useFormControlProps(props)
     const { getRootProps, getRadioProps, onChange } = useRadioGroup(props)
+    const { t } = useTranslation()
 
     const groupProps = getRootProps()
     const [noProps, yesProps] = useMemo(() => {
@@ -86,7 +88,7 @@ export const YesNo = forwardRef<YesNoProps, 'input'>(
           {...noProps}
           onChange={(value) => onChange(value as YesNoOptionValue)}
           leftIcon={BiX}
-          label="No"
+          label={t('features.adminForm.sidebar.fields.yesNo.no')}
           // Ref is set here for tracking current value, and also so any errors
           // can focus this input.
           ref={ref}
@@ -98,7 +100,7 @@ export const YesNo = forwardRef<YesNoProps, 'input'>(
           {...yesProps}
           onChange={(value) => onChange(value as YesNoOptionValue)}
           leftIcon={BiCheck}
-          label="Yes"
+          label={t('features.adminForm.sidebar.fields.yesNo.yes')}
           title={props.title}
         />
       </HStack>
