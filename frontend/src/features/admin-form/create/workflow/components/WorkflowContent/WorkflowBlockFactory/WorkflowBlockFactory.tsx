@@ -46,7 +46,7 @@ export const WorkflowBlockFactory = ({
           handleOpenDeleteModal={onDeleteModalOpen}
         />
       ) : (
-        <InactiveStepBlock stepNumber={stepNumber} step={step}/>
+        <InactiveStepBlock stepNumber={stepNumber} step={step} />
       )}
     </>
   )
