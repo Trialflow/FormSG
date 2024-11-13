@@ -189,7 +189,7 @@ export const InactiveStepBlock = ({
           ) : null}
         </Stack>
       </chakra.button>
-      {(
+      {
         <IconButton
           top={{ base: '0.5rem', md: '2rem' }}
           right={{ base: '0.5rem', md: '2rem' }}
@@ -200,7 +200,7 @@ export const InactiveStepBlock = ({
           onClick={handleClick}
           icon={<BiPencil fontSize="1.5rem" />}
         />
-      )}
+      }
     </Box>
   )
 }
