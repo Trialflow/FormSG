@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react'
-import { BiTrash } from 'react-icons/bi'
+import { BiPencil } from 'react-icons/bi'
 import { Box, chakra, Flex, Stack, Text } from '@chakra-ui/react'
 import { Dictionary } from 'lodash'
 
@@ -61,7 +61,6 @@ const SubsequentStepRespondentBadges = ({
 export const InactiveStepBlock = ({
   stepNumber,
   step,
-  handleOpenDeleteModal,
 }: InactiveStepBlockProps): JSX.Element | null => {
   const { idToFieldMap } = useAdminFormWorkflow()
   const setToEditing = useAdminWorkflowStore(setToEditingSelector)
@@ -190,16 +189,16 @@ export const InactiveStepBlock = ({
           ) : null}
         </Stack>
       </chakra.button>
-      {!isFirstStep && (
+      {(
         <IconButton
           top={{ base: '0.5rem', md: '2rem' }}
           right={{ base: '0.5rem', md: '2rem' }}
           pos="absolute"
-          aria-label="Delete step"
+          aria-label="Click to edit"
           variant="clear"
-          colorScheme="danger"
-          onClick={handleOpenDeleteModal}
-          icon={<BiTrash fontSize="1.5rem" />}
+          colorScheme="secondary"
+          onClick={handleClick}
+          icon={<BiPencil fontSize="1.5rem" />}
         />
       )}
     </Box>
