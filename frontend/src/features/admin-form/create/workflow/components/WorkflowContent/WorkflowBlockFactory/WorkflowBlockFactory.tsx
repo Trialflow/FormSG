@@ -49,7 +49,6 @@ export const WorkflowBlockFactory = ({
         <InactiveStepBlock
           stepNumber={stepNumber}
           step={step}
-          handleOpenDeleteModal={onDeleteModalOpen}
         />
       )}
     </>

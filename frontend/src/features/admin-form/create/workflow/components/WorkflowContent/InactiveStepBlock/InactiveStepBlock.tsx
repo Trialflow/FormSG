@@ -27,7 +27,6 @@ import { InactiveApprovalsBlock } from './InactiveApprovalsBlock'
 interface InactiveStepBlockProps {
   stepNumber: number
   step: FormWorkflowStepDto
-  handleOpenDeleteModal: () => void
 }
 
 interface RespondentBadgeProps {
