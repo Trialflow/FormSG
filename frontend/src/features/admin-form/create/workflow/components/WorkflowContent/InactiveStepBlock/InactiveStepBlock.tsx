@@ -186,7 +186,6 @@ export const InactiveStepBlock = ({
           pos="absolute"
           aria-label="Click to edit"
           variant="clear"
-          colorScheme="secondary"
           onClick={handleClick}
           icon={<BiPencil fontSize="1.5rem" />}
           cursor={isPreventEdit ? 'not-allowed' : 'pointer'}
