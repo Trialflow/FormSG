@@ -139,16 +139,7 @@ export const InactiveStepBlock = ({
         cursor={isPreventEdit ? 'not-allowed' : 'pointer'}
         disabled={isPreventEdit}
         aria-disabled={isPreventEdit}
-        _hover={{
-          _disabled: {
-            bg: 'white',
-          },
-          bg: 'primary.100',
-        }}
-        _focus={{
-          boxShadow: `0 0 0 4px var(--chakra-colors-primary-300)`,
-        }}
-        onClick={handleClick}
+        pointerEvents="none"
       >
         <Stack spacing="1.5rem" p={{ base: '1.5rem', md: '2rem' }}>
           <StepLabel tooltipLabel={stepLabelTooltip} stepNumber={stepNumber} />
@@ -198,6 +189,7 @@ export const InactiveStepBlock = ({
           colorScheme="secondary"
           onClick={handleClick}
           icon={<BiPencil fontSize="1.5rem" />}
+          cursor={isPreventEdit ? 'not-allowed' : 'pointer'}
         />
       }
     </Box>
