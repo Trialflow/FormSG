@@ -85,21 +85,15 @@ export const ApprovalsBlock = ({
 
   return (
     <EditStepBlockContainer>
-      <FormLabel
-        mb="0"
-        isRequired
-        tooltipVariant="info"
-        tooltipPlacement="top"
-        tooltipText="Use this for steps that involve any type of decision, such as reviews or endorsements"
-      >
-        Approval
-      </FormLabel>
       <Toggle
         isLoading={isLoading}
         onChange={onApprovalToggleChange}
         isChecked={isApprovalToggleChecked}
-        label="Enable approval"
-        description="If the respondent selects yes, the workflow continues. If they select no, it ends."
+        label="This respondent is an approver"
+        description="If they select Yes, the form continues to the next step. If they select No, it stops here."
+        tooltipText="Use this for steps that involve any type of decision, such as reviews or endorsements"
+        tooltipVariant="info"
+        tooltipPlacement="top"
       />
       {isApprovalToggleChecked ? (
         <FormControl isInvalid={!!errors.approval_field?.message}>
