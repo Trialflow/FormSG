@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react'
-import { BiTrash } from 'react-icons/bi'
+import { BiPencil } from 'react-icons/bi'
 import { Box, chakra, Flex, Stack, Text } from '@chakra-ui/react'
 import { Dictionary } from 'lodash'
 
@@ -27,7 +27,6 @@ import { InactiveApprovalsBlock } from './InactiveApprovalsBlock'
 interface InactiveStepBlockProps {
   stepNumber: number
   step: FormWorkflowStepDto
-  handleOpenDeleteModal: () => void
 }
 
 interface RespondentBadgeProps {
@@ -61,7 +60,6 @@ const SubsequentStepRespondentBadges = ({
 export const InactiveStepBlock = ({
   stepNumber,
   step,
-  handleOpenDeleteModal,
 }: InactiveStepBlockProps): JSX.Element | null => {
   const { idToFieldMap } = useAdminFormWorkflow()
   const setToEditing = useAdminWorkflowStore(setToEditingSelector)
@@ -141,16 +139,7 @@ export const InactiveStepBlock = ({
         cursor={isPreventEdit ? 'not-allowed' : 'pointer'}
         disabled={isPreventEdit}
         aria-disabled={isPreventEdit}
-        _hover={{
-          _disabled: {
-            bg: 'white',
-          },
-          bg: 'primary.100',
-        }}
-        _focus={{
-          boxShadow: `0 0 0 4px var(--chakra-colors-primary-300)`,
-        }}
-        onClick={handleClick}
+        pointerEvents="none"
       >
         <Stack spacing="1.5rem" p={{ base: '1.5rem', md: '2rem' }}>
           <StepLabel tooltipLabel={stepLabelTooltip} stepNumber={stepNumber} />
@@ -190,18 +179,18 @@ export const InactiveStepBlock = ({
           ) : null}
         </Stack>
       </chakra.button>
-      {!isFirstStep && (
+      {
         <IconButton
           top={{ base: '0.5rem', md: '2rem' }}
           right={{ base: '0.5rem', md: '2rem' }}
           pos="absolute"
-          aria-label="Delete step"
+          aria-label="Click to edit"
           variant="clear"
-          colorScheme="danger"
-          onClick={handleOpenDeleteModal}
-          icon={<BiTrash fontSize="1.5rem" />}
+          onClick={handleClick}
+          icon={<BiPencil fontSize="1.5rem" />}
+          cursor={isPreventEdit ? 'not-allowed' : 'pointer'}
         />
-      )}
+      }
     </Box>
   )
 }
