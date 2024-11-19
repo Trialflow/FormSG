@@ -374,7 +374,7 @@ const addAdminEmails = async (
   ).toBeVisible()
 
   if (formSettings.emails) {
-    const emailInput = page.getByLabel('Send an email copy of new responses')
+    const emailInput = page.getByLabel('Notifications for new responses')
     await emailInput.focus()
 
     // Clear the current admin email
@@ -452,7 +452,7 @@ const addBasicField = async (
     }
     // Images and Statements don't have titles
   } else {
-    await page.getByLabel('Question').fill(field.title)
+    await page.getByLabel('Field Name').fill(field.title)
   }
 
   // Toggle required for input fields except Table field (required toggled for individual columns)

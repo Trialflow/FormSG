@@ -40,6 +40,7 @@ import {
   isProcessedSingleAnswerResponse,
   isProcessedTableResponse,
 } from './field-validation.guards'
+import { checkIsResponseChangedV3 } from './field-validation.utils'
 
 const logger = createLoggerWithLabel(module)
 
@@ -361,6 +362,10 @@ const isValidationRequiredV3 = ({
   isVisible: boolean
   formId: string
 }): Result<boolean, ValidateFieldErrorV3> => {
+  if (!checkIsResponseChangedV3({ response, prevResponse })) {
+    return ok(false)
+  }
+
   if (isGenericStringAnswerResponseV3(response)) {
     return ok(
       (formField.required && isVisible) ||
@@ -375,16 +380,6 @@ const isValidationRequiredV3 = ({
       )
     case BasicField.Email:
     case BasicField.Mobile:
-      // For verifiable field, if the value and signature are the same as the previous response,
-      // then the field does not need to be validated again.
-      if (
-        prevResponse &&
-        response.fieldType === prevResponse.fieldType &&
-        prevResponse.answer.value === response.answer.value &&
-        prevResponse.answer.signature === response.answer.signature
-      ) {
-        return ok(false)
-      }
       return ok(
         (formField.required && isVisible) ||
           response.answer.value.trim() !== '' ||
