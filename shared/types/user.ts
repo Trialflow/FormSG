@@ -23,6 +23,7 @@ export const UserBase = z.object({
       postmanSms: z.boolean().optional(),
       mrfEmailNotifications: z.boolean().optional(), // Previously used for MRF email notifications, not currently used
       mrfAdminSubmissionKey: z.boolean().optional(),
+      mrfConditionalRouting: z.boolean().optional(),
       mfb: z.boolean().optional(),
     })
     .optional(),

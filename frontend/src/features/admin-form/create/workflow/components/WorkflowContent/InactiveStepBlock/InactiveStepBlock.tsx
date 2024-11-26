@@ -3,8 +3,9 @@ import { BiPencil } from 'react-icons/bi'
 import { Box, chakra, Flex, Stack, Text } from '@chakra-ui/react'
 import { Dictionary } from 'lodash'
 
-import { FormField } from '~shared/types'
+import { BasicField, FormField } from '~shared/types'
 import { FormWorkflowStepDto, WorkflowType } from '~shared/types/form'
+import { checkIsOptionsMismatched } from '~shared/utils/options-recipients-map-validation'
 
 import IconButton from '~components/IconButton'
 
@@ -48,6 +49,43 @@ const SubsequentStepRespondentBadges = ({
       )
     case WorkflowType.Dynamic:
       return <FieldLogicBadge field={idToFieldMap[step.field]} />
+    case WorkflowType.Conditional: {
+      const selectedConditionalField = idToFieldMap[step.conditional_field]
+      if (
+        !selectedConditionalField ||
+        selectedConditionalField.fieldType !== BasicField.Dropdown
+      ) {
+        return <FieldLogicBadge field={selectedConditionalField} />
+      }
+      const selectedConditionalFieldOptions =
+        selectedConditionalField.fieldOptions
+      const optionsToRecipientsMapOptions = Object.keys(
+        selectedConditionalField.optionsToRecipientsMap || {},
+      )
+      const isOptionsMismatched = checkIsOptionsMismatched(
+        optionsToRecipientsMapOptions,
+        selectedConditionalFieldOptions,
+      )
+      return (
+        <Stack direction="column" spacing="0.5rem">
+          <FieldLogicBadge
+            field={
+              step.conditional_field
+                ? idToFieldMap[step.conditional_field]
+                : undefined
+            }
+          />
+          {isOptionsMismatched ? (
+            <FieldLogicBadge
+              defaults={{
+                variant: 'error',
+                message: 'Please update your CSV options and emails',
+              }}
+            />
+          ) : null}
+        </Stack>
+      )
+    }
     default: {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const _: never = step
@@ -108,8 +146,7 @@ export const InactiveStepBlock = ({
         field={idToFieldMap[fieldId]}
         defaults={{
           variant: 'info',
-          message:
-            'This field was deleted and has been removed from your workflow',
+          message: 'This field was deleted, please select another field',
         }}
       />
     ))

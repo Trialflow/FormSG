@@ -127,7 +127,7 @@ const sendNextStepEmail = ({
 }): ResultAsync<true, InvalidWorkflowTypeError | MailSendError> => {
   const logMeta = {
     action: 'sendNextStepEmail',
-    formId,
+    formId: formId.toString(),
     submissionId,
     nextWorkflowStep: nextStepNumber,
   }
@@ -139,7 +139,7 @@ const sendNextStepEmail = ({
 
   return (
     // Step 1: Retrieve email addresses for current workflow step
-    retrieveWorkflowStepEmailAddresses(nextStep, responses)
+    retrieveWorkflowStepEmailAddresses(form, nextStep, responses)
       .mapErr((error) => {
         logger.error({
           message: 'Failed to retrieve workflow step email addresses',
@@ -150,7 +150,13 @@ const sendNextStepEmail = ({
       })
       // Step 2: send out next workflow step email
       .asyncAndThen((emails) => {
-        if (!emails) return okAsync(true)
+        if (emails.length <= 0) {
+          logger.info({
+            message: 'No destination email found for MRF next step email',
+            meta: logMeta,
+          })
+          return okAsync(true)
+        }
         return MailService.sendMRFWorkflowStepEmail({
           emails,
           formTitle,
@@ -185,7 +191,7 @@ const sendMrfOutcomeEmails = ({
 }): ResultAsync<true, InvalidWorkflowTypeError | MailSendError> => {
   const logMeta = {
     action: 'sendMrfOutcomeEmails',
-    formId: form._id,
+    formId: form._id?.toString(),
     submissionId,
   }
   const emailsToNotify =
@@ -216,7 +222,7 @@ const sendMrfOutcomeEmails = ({
     // Step 1: Fetch email address from all workflow steps that are selected to notify
     Result.combine(
       validWorkflowStepsToNotify.map((workflowStep) =>
-        retrieveWorkflowStepEmailAddresses(workflowStep, responses),
+        retrieveWorkflowStepEmailAddresses(form, workflowStep, responses),
       ),
     )
       .mapErr((error) => {
@@ -236,8 +242,13 @@ const sendMrfOutcomeEmails = ({
       })
       // Step 3: Send outcome emails based on type
       .asyncAndThen((destinationEmails) => {
-        if (!destinationEmails || destinationEmails.length <= 0)
+        if (!destinationEmails || destinationEmails.length <= 0) {
+          logger.info({
+            message: 'No destination email found for MRF outcome email',
+            meta: logMeta,
+          })
           return okAsync(true)
+        }
 
         const lastStepNumber = form.workflow.length - 1
         const isLastStep = currentStepNumber === lastStepNumber
