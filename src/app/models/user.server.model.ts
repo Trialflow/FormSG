@@ -77,6 +77,7 @@ const compileUserModel = (db: Mongoose) => {
         postmanSms: Boolean,
         mrfEmailNotifications: Boolean, // Previously used for MRF email notifications, not currently used
         mrfAdminSubmissionKey: Boolean,
+        mrfConditionalRouting: Boolean,
         mfb: Boolean,
       },
       flags: {

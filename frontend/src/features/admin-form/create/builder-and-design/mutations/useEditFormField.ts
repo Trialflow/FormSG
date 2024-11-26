@@ -3,14 +3,17 @@ import { useTranslation } from 'react-i18next'
 import { useMutation, useQueryClient } from 'react-query'
 import { useParams } from 'react-router-dom'
 
-import { FormFieldDto } from '~shared/types/field'
+import { DropdownFieldBase, FormFieldDto } from '~shared/types/field'
 import { AdminFormDto } from '~shared/types/form'
 
 import { useToast } from '~hooks/useToast'
 
 import { adminFormKeys } from '~features/admin-form/common/queries'
 
-import { updateSingleFormField } from '../UpdateFormFieldService'
+import {
+  updateOptionsToRecipientsMap,
+  updateSingleFormField,
+} from '../UpdateFormFieldService'
 import {
   FieldBuilderState,
   fieldBuilderStateSelector,
@@ -78,6 +81,40 @@ export const useEditFormField = () => {
         updateSingleFormField({ formId, updateFieldBody }),
       {
         onSuccess: handleSuccess,
+        onError: handleError,
+      },
+    ),
+    editOptionToRecipientsMutation: useMutation(
+      ({
+        fieldId,
+        optionsToRecipientsMap,
+      }: {
+        fieldId: string
+        optionsToRecipientsMap: DropdownFieldBase['optionsToRecipientsMap']
+      }) => {
+        return updateOptionsToRecipientsMap({
+          formId,
+          fieldId,
+          optionsToRecipientsMap,
+        })
+      },
+      {
+        onSuccess: (newField: FormFieldDto) => {
+          toast.closeAll()
+          toast({
+            description: 'Your options and emails have been saved.',
+          })
+          queryClient.setQueryData<AdminFormDto>(adminFormKey, (oldForm) => {
+            // Should not happen, should not be able to update field if there is no
+            // existing data.
+            if (!oldForm) throw new Error('Query should have been set')
+            const currentFieldIndex = oldForm.form_fields.findIndex(
+              (ff) => ff._id === newField._id,
+            )
+            oldForm.form_fields[currentFieldIndex] = newField
+            return oldForm
+          })
+        },
         onError: handleError,
       },
     ),
