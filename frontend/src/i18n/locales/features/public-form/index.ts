@@ -19,7 +19,7 @@ export interface PublicForm {
     verifiedFieldExpired: string
   }
   components: {
-    PublicFormSubmitButton: {
+    submitButton: {
       loadingText: string
       visuallyHidden: string
       preventSubmission: string
@@ -27,5 +27,17 @@ export interface PublicForm {
       submitNow: string
     }
     table: Table
+    feedbackBlock: {
+      title: {
+        payment: string
+        general: string
+      }
+      rating: {
+        label: string
+        error: string
+      }
+      commentPlaceholder: string
+      submitButton: string
+    }
   }
 }
