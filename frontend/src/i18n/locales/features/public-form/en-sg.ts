@@ -24,7 +24,7 @@ export const enSG: PublicForm = {
       'Your verified fields have expired. Please verify those fields again.',
   },
   components: {
-    PublicFormSubmitButton: {
+    submitButton: {
       loadingText: 'Submitting',
       visuallyHidden: 'End of form.',
       preventSubmission: 'Submission disabled',
@@ -32,5 +32,17 @@ export const enSG: PublicForm = {
       submitNow: 'Submit now',
     },
     table,
+    feedbackBlock: {
+      title: {
+        payment: 'How was your experience making payment on this form?',
+        general: 'How was your form filling experience today?',
+      },
+      rating: {
+        label: 'Form feedback rating',
+        error: 'Please select a rating',
+      },
+      commentPlaceholder: 'Tell us more about your experience',
+      submitButton: 'Submit feedback',
+    },
   },
 }
